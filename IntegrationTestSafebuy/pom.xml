@@ -74,7 +74,11 @@
 			<artifactId>hibernate-entitymanager</artifactId>
 			<version>${hibernate.version}</version>
 		</dependency>
-
+		<dependency>
+			<groupId>org.postgresql</groupId>
+			<artifactId>postgresql</artifactId>
+			<version>9.3-1102-jdbc41</version>
+		</dependency>
 
 		<!-- Test Artifacts -->
 		<dependency>
@@ -91,7 +95,8 @@
 		</dependency>
 	</dependencies>
 
-<!-- 	with out this lines eclipse change automatically the System library to  J2SE 1.5-->
+	<!-- with out this lines eclipse change automatically the System library 
+		to J2SE 1.5 -->
 	<build>
 		<plugins>
 			<plugin>
