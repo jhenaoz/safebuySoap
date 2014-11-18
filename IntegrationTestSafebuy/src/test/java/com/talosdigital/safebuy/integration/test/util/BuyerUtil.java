@@ -27,15 +27,12 @@ public class BuyerUtil {
 			Class.forName(JDBC_DRIVER);
 			con = DriverManager.getConnection(DB_URL, USER, PASS);
 			stm = con.createStatement();
-			String sql = "INSERT INTO buyer(id, lastname, name) VALUES (?,?,?);";
+			String sql = "INSERT INTO buyer(id, lastname, name) VALUES (?,?,?)";
 			PreparedStatement statment = con.prepareStatement(sql);
 			statment.setInt(1, -1);
 			statment.setString(2, lastName);
 			statment.setString(3, name);
-			ResultSet rs = stm.executeQuery(sql);
-			rs.close();
-			stm.close();
-			con.close();
+			statment.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} catch (ClassNotFoundException e) {
@@ -56,5 +53,76 @@ public class BuyerUtil {
 				e2.printStackTrace();
 			}
 		}
+	}
+	
+	public static void deleteBuyer(int id){
+		Connection conn = null;
+		Statement stm = null;
+		try {
+			Class.forName(JDBC_DRIVER);
+			conn = DriverManager.getConnection(DB_URL , USER , PASS) ;
+			stm = conn.createStatement();
+			String sql = "DELETE FROM buyer WHERE id = ?;" ;
+			PreparedStatement statment = conn.prepareStatement(sql);
+			statment.setInt(1, id);
+			ResultSet rs = statment.executeQuery();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}catch(ClassNotFoundException e){
+			e.printStackTrace();
+		}finally{
+			try {
+				if (conn != null) {
+					conn.close();
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			try {
+				if (stm != null) {
+					stm.close();
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	public static boolean existBuyer(int id){
+		Connection conn = null;
+		Statement stm = null;
+		try {
+			Class.forName(JDBC_DRIVER);
+			conn = DriverManager.getConnection(DB_URL , USER , PASS) ;
+			stm = conn.createStatement();
+			String sql = "SELECT * FROM buyer where id = ?" ;
+			PreparedStatement statment = conn.prepareStatement(sql);
+			statment.setInt(1, id);
+			ResultSet rs = statment.executeQuery();
+			while (rs.next()) {
+				return true;
+			}
+			return false;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}catch(ClassNotFoundException e){
+			e.printStackTrace();
+		}finally{
+			try {
+				if (conn != null) {
+					conn.close();
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			try {
+				if (stm != null) {
+					stm.close();
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return false;
 	}
 }
