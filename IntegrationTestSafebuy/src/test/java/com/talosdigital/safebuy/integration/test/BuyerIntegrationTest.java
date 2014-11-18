@@ -26,7 +26,6 @@ import com.talosdigital.safebuy.config.Properties;
 import com.talosdigital.safebuy.integration.test.util.BuyerUtil;
 import com.talosdigital.safebuy.integration.test.util.SoapUtil;
 
-//@SuppressWarnings("restriction")
 public class BuyerIntegrationTest {
 
 	ArrayList<Integer> buyers;
@@ -37,32 +36,14 @@ public class BuyerIntegrationTest {
 		buyers = new ArrayList<Integer>();
 		SOAPConnectionFactory soapConnectionFactory = SOAPConnectionFactory.newInstance();
 		soapConection = soapConnectionFactory.createConnection();
-		
+		BuyerUtil.deleteBuyer(-1);
 	}
 
 	@Test
 	public void createBuyer() throws SOAPException, IOException, JAXBException  {
-		MessageFactory messageFactory = MessageFactory.newInstance();
-		SOAPMessage soapMessage = messageFactory.createMessage();
-		SOAPPart soapPart = soapMessage.getSOAPPart();
-				
-		SOAPEnvelope envelope = soapPart.getEnvelope();
-		envelope.addNamespaceDeclaration("gs", Properties.NAMESPACE ) ;
+		SOAPMessage soapMessage = createMessage();
 		
-		/*
-		<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
-						  xmlns:gs="http://talosdigital.com/buyer">
-		   <soapenv:Header/>
-		   <soapenv:Body>
-		      <gs:createBuyerRequest>
-		         <gs:name>Carlos</gs:name>
-		         <gs:lastname>henao</gs:lastname>
-		      </gs:createBuyerRequest>
-		   </soapenv:Body>
-		</soapenv:Envelope>
- 		*/
-		
-		SOAPBody soapBody = envelope.getBody();
+		SOAPBody soapBody = soapMessage.getSOAPBody();
 		SOAPElement soapBodyElement = soapBody.addChildElement("createBuyerRequest" , "gs") ;
 		SOAPElement name = soapBodyElement.addChildElement("name" , "gs");
 		SOAPElement lastname = soapBodyElement.addChildElement("lastname" , "gs");
@@ -74,13 +55,8 @@ public class BuyerIntegrationTest {
 		
 		soapMessage.saveChanges();
 		
-		System.out.println("REQUEST SOAP MESSAGE :");
-		soapMessage.writeTo(System.out);
-		System.out.println();
 		SOAPMessage soapResponse = soapConection.call(soapMessage, Properties.URL);
-		System.out.println("SOAP RESPONSE MESSAGE");
 		Document document = soapResponse.getSOAPBody().extractContentAsDocument();
-		soapResponse.writeTo(System.out);
 		String id = SoapUtil.getElement("ns2:id", document);
 		String response = SoapUtil.getElement("ns2:response", document);
 		
@@ -89,7 +65,7 @@ public class BuyerIntegrationTest {
 		buyers.add(Integer.parseInt(id));
 	}
 
-	@Test
+	@Test()
 	public void retrieveBuyer() throws SOAPException, IOException {
 		//Create a buyer, created with id -1
 		String buyerName = "Juan";
@@ -97,13 +73,9 @@ public class BuyerIntegrationTest {
 		BuyerUtil.createBuyer(buyerLastName, buyerLastName);
 		
 		//Search for buyer with id -1, with a soap service
-		MessageFactory messageFactory = MessageFactory.newInstance();
-		SOAPMessage soapMessage = messageFactory.createMessage();
-		SOAPPart soapPart = soapMessage.getSOAPPart();
-		SOAPEnvelope envelope = soapPart.getEnvelope();
-		envelope.addNamespaceDeclaration("gs", Properties.NAMESPACE ) ;		
-		
-		SOAPBody soapBody = envelope.getBody();
+		SOAPMessage soapMessage = createMessage();
+
+		SOAPBody soapBody = soapMessage.getSOAPBody();
 		SOAPElement soapBodyElement = soapBody.addChildElement("getBuyerRequest" , "gs") ;
 		SOAPElement soapBodyElement1 = soapBodyElement.addChildElement("id" , "gs");
 		soapBodyElement1.addTextNode("-1"); 
@@ -112,14 +84,16 @@ public class BuyerIntegrationTest {
 		headers.addHeader("SOAPAction", "");
 		soapMessage.saveChanges();
 		SOAPMessage soapResponse = soapConection.call(soapMessage, Properties.URL);
-		Document document = soapResponse.getSOAPBody().extractContentAsDocument();
+		soapResponse.writeTo(System.out);
+		//ESTO ME ESTA DEVOLVIENDO NULL Y NI IDEA PORQUE!
+		Document document =soapResponse.getSOAPBody().extractContentAsDocument();
+		
 		int id = Integer.parseInt(SoapUtil.getElement("ns2:id", document));
 		String name = SoapUtil.getElement("ns2:name", document);
 		String lastName = SoapUtil.getElement("ns2:lastName", document);
 		
 		//delete the record for leave the database in the original state.
-		deleteBuyer(-1);
-		
+		BuyerUtil.deleteBuyer(-1);
 		//assert the params of the created object
 		assertEquals(-1, id);
 		assertEquals(buyerName, name);
@@ -127,8 +101,22 @@ public class BuyerIntegrationTest {
 		
 		
 	}
+	@Test
+	public void deleteBuyer() throws SOAPException, IOException{
+		BuyerUtil.createBuyer("Juan", "Henao");
+		SOAPMessage soapMessage = createMessage();
+		SOAPBody soapBody = soapMessage.getSOAPBody();
+		SOAPElement soapBodyElement = soapBody.addChildElement("deleteBuyerRequest" , "gs") ;
+		SOAPElement soapBodyElement1 = soapBodyElement.addChildElement("id" , "gs");
+		soapBodyElement1.addTextNode("" + -1); 
 
-	public void deleteBuyer(int id) throws SOAPException, IOException{
+		soapMessage.saveChanges();
+		soapConection.call(soapMessage, Properties.URL);
+
+		assertEquals(false, BuyerUtil.existBuyer(-1));
+	}
+	
+	public SOAPMessage createMessage() throws SOAPException{
 		MessageFactory messageFactory = MessageFactory.newInstance();
 		SOAPMessage soapMessage = messageFactory.createMessage();
 		SOAPPart soapPart = soapMessage.getSOAPPart();
@@ -136,28 +124,15 @@ public class BuyerIntegrationTest {
 		SOAPEnvelope envelope = soapPart.getEnvelope();
 		envelope.addNamespaceDeclaration("gs", Properties.NAMESPACE ) ;
 		
-		SOAPBody soapBody = envelope.getBody();
-		SOAPElement soapBodyElement = soapBody.addChildElement("deleteBuyerRequest" , "gs") ;
-		SOAPElement soapBodyElement1 = soapBodyElement.addChildElement("id" , "gs");
-		soapBodyElement1.addTextNode("" + id); 
-		
 		MimeHeaders headers = soapMessage.getMimeHeaders();
 		headers.addHeader("SOAPAction", "");
 		
-		soapMessage.saveChanges();
-		
-		System.out.println("REQUEST SOAP MESSAGE :");
-		soapMessage.writeTo(System.out);
-		System.out.println();
-		SOAPMessage soapResponse = soapConection.call(soapMessage, Properties.URL);
-		System.out.println("SOAP RESPONSE MESSAGE");
-		soapResponse.writeTo(System.out);		 
+		return soapMessage;
 	}
-	
 	@After
 	public void cleanAll() throws SOAPException, IOException {
 		for (Integer integer : buyers) {
-			deleteBuyer(integer);
+			BuyerUtil.deleteBuyer(integer);
 		}
 	}
 
