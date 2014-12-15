@@ -26,6 +26,9 @@ public class Store implements Serializable {
 	@Transient
 	private List<Buyer> buyers;
 	
+	@Transient
+	private List<Product> products;
+	
 	@Id
 	@SequenceGenerator(name = "webstore_idwebstore_seq", sequenceName = "webstore_idwebstore_seq", allocationSize=1)
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "webstore_idwebstore_seq" )

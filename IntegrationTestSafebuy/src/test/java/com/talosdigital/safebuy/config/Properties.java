@@ -10,5 +10,5 @@ public class Properties {
 	public static final String JDBC_DRIVER = "org.postgresql.Driver";  
 	public static final String DB_URL = "jdbc:postgresql://localhost:5432/safebuy";
 	public static final String USER = "postgres";
-	public static final String PASS = "test4echo";
+	public static final String PASS = "postgres";
 }

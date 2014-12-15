@@ -129,11 +129,11 @@ public class BuyerIntegrationTest {
 		
 		return soapMessage;
 	}
-	@After
-	public void cleanAll() throws SOAPException, IOException {
-		for (Integer integer : buyers) {
-			BuyerUtil.deleteBuyer(integer);
-		}
-	}
+//	@After
+//	public void cleanAll() throws SOAPException, IOException {
+//		for (Integer integer : buyers) {
+//			BuyerUtil.deleteBuyer(integer);
+//		}
+//	}
 
 }
