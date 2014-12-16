@@ -2,8 +2,10 @@ package com.talosdigital.safebuy.model;
 
 import java.io.Serializable;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -32,10 +34,10 @@ public class Product implements Serializable{
 	@Column(name="price", updatable=true, insertable=true)
 	private float price;
 	
-	@Column(name="stockQuantity", updatable=true, insertable=true)
+	@Column(name="stock_quantity", updatable=true, insertable=true)
 	private int stockQuantity;
 
-	@ManyToOne(optional = false)
+	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, optional = false)
 	private Store store;
 	
 	public int getId() {
