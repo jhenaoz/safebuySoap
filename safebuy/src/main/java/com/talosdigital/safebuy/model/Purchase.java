@@ -10,6 +10,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.JoinColumn;
 import javax.persistence.Table;
@@ -29,15 +30,20 @@ public class Purchase {
 	@Column(name = "id", updatable = false)
 	private int id;
 
-	@Column(name = "store")
+	@Column(name = "store", nullable = false)
 	private Store store;
 
-	// Delete orphan is true by default using @ElementCollection.
-	@ElementCollection(fetch = FetchType.LAZY)
+	// Delete orphan is true by default using @ElementCollection and fetch type
+	// is LAZY.
+	@ElementCollection
 	@CollectionTable(
 			name = "purchased_product",
 			joinColumns = @JoinColumn(name = "purchase_id"))
 	private List<Product> products;
+	
+	@OneToOne(fetch = FetchType.LAZY)
+	@Column(name = "buyer", nullable = false)
+	private Buyer buyer;
 
 	public int getId() {
 		return id;
@@ -61,5 +67,13 @@ public class Purchase {
 
 	public void setProducts(List<Product> products) {
 		this.products = products;
+	}
+
+	public Buyer getBuyer() {
+		return buyer;
+	}
+
+	public void setBuyer(Buyer buyer) {
+		this.buyer = buyer;
 	}
 }

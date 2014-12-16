@@ -19,6 +19,7 @@ public class ProductDao {
 		return persistence.executeQuery(Product.class, "SELECT p FROM Product p");
 	}
 	
+	//TODO: Test this.
 	public List<Product> getProductListForStore(int storeId){
 		return persistence.executeQuery(
 				Product.class,
