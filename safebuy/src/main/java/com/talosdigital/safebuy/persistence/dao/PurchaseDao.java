@@ -12,9 +12,26 @@ import com.talosdigital.safebuy.persistence.util.PersistenceService;
 public class PurchaseDao {
 	
 	@Autowired
-	private PersistenceService persistenceService;
+	private PersistenceService persistence;
 
 	public List<Purchase> getPurchaseList(){
-		return null;
+		return persistence.executeQuery(Purchase.class, "SELECT p FROM Purchase p");
+	}
+	
+	public Purchase getPurchase(int id){
+		return persistence.findById(Purchase.class, id);
+	}
+	
+	public Purchase createPurchase(Purchase purchase){
+		return persistence.save(purchase);
+	}
+	
+	public void updatePurchase(Purchase purchase){
+		persistence.update(purchase);
+	}
+	
+	public void deletePurchase(int id){
+		Purchase p = persistence.findById(Purchase.class, id);
+		persistence.remove(p);
 	}
 }
