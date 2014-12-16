@@ -1,5 +1,6 @@
 package com.talosdigital.safebuy.model;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CollectionTable;
@@ -11,9 +12,12 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
+import javax.persistence.PrePersist;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.JoinColumn;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 @Entity
 @Table(name = "PURCHASE")
@@ -27,10 +31,10 @@ public class Purchase {
 	@GeneratedValue(
 			strategy = GenerationType.SEQUENCE,
 			generator = "webpurchase_idwebpurchase_seq")
-	@Column(name = "id", updatable = false)
+	@Column(updatable = false)
 	private int id;
 
-	@Column(name = "store", nullable = false)
+	@Column(nullable = false)
 	private Store store;
 
 	// Delete orphan is true by default using @ElementCollection and fetch type
@@ -42,8 +46,36 @@ public class Purchase {
 	private List<Product> products;
 	
 	@OneToOne(fetch = FetchType.LAZY)
-	@Column(name = "buyer", nullable = false)
+	@Column(nullable = false)
 	private Buyer buyer;
+
+	@Column
+	private float value;
+	
+	public float getValue() {
+		return value;
+	}
+	
+	@PrePersist
+	public void setValue() {
+		value = 0;
+		for(Product product : products){
+			value += product.getPrice();
+		}
+	}
+
+	@Temporal(TemporalType.DATE)
+	@Column
+	private Date purchaseDate;
+	
+	public Date getPurchaseDate() {
+		return purchaseDate;
+	}
+	
+	@PrePersist
+	public void setPurchaseDate() {
+		this.purchaseDate = new Date();
+	}
 
 	public int getId() {
 		return id;

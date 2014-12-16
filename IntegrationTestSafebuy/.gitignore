@@ -36,10 +36,11 @@ tmp/
 *.swp
 *~.nib
 local.properties
-.settings
+.settings/
 .loadpath
 .classpath
 .project
+.springBeans
 
 # External tool builders
 .externalToolBuilders/
