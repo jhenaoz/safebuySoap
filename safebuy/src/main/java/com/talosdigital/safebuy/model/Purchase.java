@@ -45,7 +45,6 @@ public class Purchase {
 			joinColumns = @JoinColumn(name = "purchase_id"))
 	private List<Product> products;
 	
-	@OneToOne(fetch = FetchType.LAZY)
 	@Column(nullable = false)
 	private Buyer buyer;
 
@@ -57,11 +56,12 @@ public class Purchase {
 	}
 	
 	@PrePersist
-	public void setValue() {
+	public void initializeEntity() {
 		value = 0;
 		for(Product product : products){
 			value += product.getPrice();
 		}
+		this.purchaseDate = new Date();
 	}
 
 	@Temporal(TemporalType.DATE)
@@ -70,11 +70,6 @@ public class Purchase {
 	
 	public Date getPurchaseDate() {
 		return purchaseDate;
-	}
-	
-	@PrePersist
-	public void setPurchaseDate() {
-		this.purchaseDate = new Date();
 	}
 
 	public int getId() {
