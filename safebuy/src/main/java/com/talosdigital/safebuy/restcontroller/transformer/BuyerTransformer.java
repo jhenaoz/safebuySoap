@@ -7,25 +7,19 @@ public class BuyerTransformer {
 
 	public static Buyer toBuyer(BuyerDto buyerDto){
 		Buyer buyer = new Buyer();
-		if (buyerDto.getName() != null) {
-			buyer.setName(buyerDto.getName());
-		}
-		if (buyerDto.getLastName() != null) {
-			buyer.setLastName(buyerDto.getLastName());
-		}
+		buyer.setName(buyerDto.getName());
+		buyer.setLastName(buyerDto.getLastName());
 		buyer.setId(buyerDto.getId());
+		buyer.setStore(StoreTransformer.toStore(buyerDto.getStoreDto()));
 		return buyer;
 	}
 	
 	public static BuyerDto toBuyerDto(Buyer buyer){
 		BuyerDto buyerDto = new BuyerDto();
-		if (buyer.getName() != null) {
-			buyerDto.setName(buyer.getName());
-		}
-		if (buyer.getLastName() != null) {
-			buyerDto.setLastName(buyer.getLastName());
-		}
+		buyerDto.setName(buyer.getName());
+		buyerDto.setLastName(buyer.getLastName());
 		buyerDto.setId(buyer.getId());
+		buyerDto.setStoreDto(StoreTransformer.toStoreDto(buyer.getStore()));
 		return buyerDto;
 	}
 	

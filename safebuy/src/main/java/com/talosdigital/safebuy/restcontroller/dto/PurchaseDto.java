@@ -1,5 +1,6 @@
 package com.talosdigital.safebuy.restcontroller.dto;
 
+import java.util.Date;
 import java.util.List;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
@@ -14,6 +15,26 @@ public class PurchaseDto {
 	private List<ProductDto> products;
 	
 	private BuyerDto buyer;
+	
+	private Date date;
+	
+	private float value;
+
+	public Date getDate() {
+		return date;
+	}
+
+	public void setDate(Date date) {
+		this.date = date;
+	}
+
+	public float getValue() {
+		return value;
+	}
+
+	public void setValue(float value) {
+		this.value = value;
+	}
 
 	public int getId() {
 		return id;

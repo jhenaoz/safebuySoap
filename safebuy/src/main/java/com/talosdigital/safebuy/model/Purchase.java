@@ -61,15 +61,15 @@ public class Purchase {
 		for(Product product : products){
 			value += product.getPrice();
 		}
-		this.purchaseDate = new Date();
+		this.date = new Date();
 	}
 
 	@Temporal(TemporalType.DATE)
 	@Column
-	private Date purchaseDate;
+	private Date date;
 	
-	public Date getPurchaseDate() {
-		return purchaseDate;
+	public Date getDate() {
+		return date;
 	}
 
 	public int getId() {

@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -30,7 +31,7 @@ public class Buyer implements Serializable{
 	@Column(name="lastName" , updatable= true , insertable = true)
 	private String lastName;
 	
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	private Store store; // many-to-one
 
 	public int getId() {

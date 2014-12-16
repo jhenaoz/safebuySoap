@@ -1,11 +1,20 @@
 package com.talosdigital.safebuy.restcontroller.dto;
 
+import com.talosdigital.safebuy.model.Store;
+
 public class BuyerDto {
 
 	private int id;
 	private String name;
 	private String lastName;
+	private StoreDto storeDto;
 	
+	public StoreDto getStoreDto() {
+		return storeDto;
+	}
+	public void setStoreDto(StoreDto storeDto) {
+		this.storeDto = storeDto;
+	}
 	public String getName() {
 		return name;
 	}

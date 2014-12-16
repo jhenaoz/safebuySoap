@@ -11,7 +11,8 @@ public class PurchaseTransformer {
 		purchaseDto.setProducts(ProductTransformer.toProductDtoList(purchase.getProducts()));
 		purchaseDto.setStore(StoreTransformer.toStoreDto(purchase.getStore()));
 		purchaseDto.setBuyer(BuyerTransformer.toBuyerDto(purchase.getBuyer()));
-		
+		purchaseDto.setDate(purchase.getDate());
+		purchaseDto.setValue(purchase.getValue());
 		return purchaseDto;
 	}
 

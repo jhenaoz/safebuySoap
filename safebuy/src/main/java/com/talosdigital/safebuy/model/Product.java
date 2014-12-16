@@ -37,7 +37,7 @@ public class Product implements Serializable{
 	@Column(name="stock_quantity", updatable=true, insertable=true)
 	private int stockQuantity;
 
-	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, optional = false)
+	@ManyToOne(fetch = FetchType.LAZY, optional = false)
 	private Store store;
 	
 	public int getId() {
