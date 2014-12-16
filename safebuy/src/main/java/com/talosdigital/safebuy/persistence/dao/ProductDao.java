@@ -15,14 +15,18 @@ public class ProductDao {
 	@Autowired
 	private PersistenceService persistence;
 	
-	//TODO: Get products by store id. There are no products outside a store.
 	public List<Product> getProductList(){
 		return persistence.executeQuery(Product.class, "SELECT p FROM Product p");
 	}
+	
+	public List<Product> getProductListForStore(int storeId){
+		return persistence.executeQuery(
+				Product.class,
+				"SELECT p FROM Product p WHERE store EQUALS " + storeId);
+	}
 
-	//TODO: Get products by store id. There are no products outside a store.
-	public Product getProduct(int nit){
-		return persistence.findById(Product.class, nit);
+	public Product getProduct(int id){
+		return persistence.findById(Product.class, id);
 	}
 	
 	public Product createProduct(Product product){
@@ -33,8 +37,8 @@ public class ProductDao {
 		persistence.update(product);
 	}
 	
-	public void deleteProduct(int nit){
-		Product p = persistence.findById(Product.class, nit);
+	public void deleteProduct(int id){
+		Product p = persistence.findById(Product.class, id);
 		persistence.remove(p);
 	}
 }

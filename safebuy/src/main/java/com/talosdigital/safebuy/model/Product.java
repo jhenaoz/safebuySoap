@@ -4,8 +4,11 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
@@ -15,8 +18,10 @@ public class Product implements Serializable{
 	private static final long serialVersionUID = 5362509841185006232L;
 
 	@Id
-	@Column(name = "nit", updatable=false)
-	private int nit;
+	@SequenceGenerator(name="webproduct_idwebproduct_seq", sequenceName="webproduct_idwebproduct_seq", allocationSize=1)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator="webproduct_idwebproduct_seq")
+	@Column(name = "id", updatable=false)
+	private int id;
 
 	@Column(name="name", updatable=true, insertable=true)
 	private String name;
@@ -32,13 +37,13 @@ public class Product implements Serializable{
 
 	@ManyToOne(optional = false)
 	private Store store;
-
-	public int getNit() {
-		return nit;
+	
+	public int getId() {
+		return id;
 	}
 	
-	public void setNit(int nit) {
-		this.nit = nit;
+	public void setId(int id){
+		this.id = id;
 	}
 
 	public String getName() {

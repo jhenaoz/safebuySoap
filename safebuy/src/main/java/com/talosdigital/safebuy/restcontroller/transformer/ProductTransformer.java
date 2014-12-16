@@ -7,12 +7,14 @@ public class ProductTransformer {
 
 	public static Product toProduct(ProductDto productDto){
 		Product product = new Product();
-		
-		product.setNit(productDto.getNit());
+		if(productDto.getId() >= 0){
+			product.setId(productDto.getId());
+		}
 		product.setName(productDto.getName());
 		product.setPrice(productDto.getPrice());
 		product.setCategory(productDto.getCategory());
 		product.setStockQuantity(productDto.getStockQuantity());
+		product.setStore(StoreTransformer.toStore(productDto.getStoreDto()));
 		
 		return product;
 	}
@@ -20,11 +22,12 @@ public class ProductTransformer {
 	public static ProductDto toProductDto(Product product){
 		ProductDto productDto = new ProductDto();
 		
-		productDto.setNit(productDto.getNit());
-		productDto.setName(productDto.getName());
-		productDto.setPrice(productDto.getPrice());
-		productDto.setCategory(productDto.getCategory());
-		productDto.setStockQuantity(productDto.getStockQuantity());
+		productDto.setId(product.getId());
+		productDto.setName(product.getName());
+		productDto.setPrice(product.getPrice());
+		productDto.setCategory(product.getCategory());
+		productDto.setStockQuantity(product.getStockQuantity());
+		productDto.setStoreDto(StoreTransformer.toStoreDto(product.getStore()));
 		
 		return productDto;
 	}

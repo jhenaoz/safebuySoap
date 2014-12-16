@@ -33,11 +33,11 @@ public class ProductRestController {
 	}
 
 	// TODO: Get products with store id.
-	@RequestMapping(value = "/rest/product/{nit}",
+	@RequestMapping(value = "/rest/product/{id}",
 			method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
-	public Product getProductByNit(@PathVariable("nit") int nit){
-		return productDao.getProduct(nit);
+	public ProductDto getProductById(@PathVariable("id") int id){
+		return ProductTransformer.toProductDto(productDao.getProduct(id));
 	}
 	
 	@RequestMapping(value = "/rest/product",
@@ -57,9 +57,9 @@ public class ProductRestController {
 	}
 	
 	//TODO: Get the store's id too.
-	@RequestMapping(value = "/rest/product/{nit}", method = RequestMethod.DELETE)
+	@RequestMapping(value = "/rest/product/{id}", method = RequestMethod.DELETE)
 	@ResponseStatus(HttpStatus.OK)
-	public void deleteProduct(@PathVariable("nit") int nit){
-		productDao.deleteProduct(nit);
+	public void deleteProduct(@PathVariable("id") int id){
+		productDao.deleteProduct(id);
 	}
 }

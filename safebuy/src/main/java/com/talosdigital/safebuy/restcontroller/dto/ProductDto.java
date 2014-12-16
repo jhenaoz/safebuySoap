@@ -1,10 +1,13 @@
 package com.talosdigital.safebuy.restcontroller.dto;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.talosdigital.safebuy.model.Category;
+import com.talosdigital.safebuy.model.Store;
 
+@JsonSerialize
 public class ProductDto {
 
-	private int nit;
+	private int id = -1;
 
 	private String name;
 
@@ -13,13 +16,15 @@ public class ProductDto {
 	private float price;
 	
 	private int stockQuantity;
+	
+	private StoreDto storeDto;
 
-	public int getNit() {
-		return nit;
+	public int getId() {
+		return id;
 	}
 	
-	public void setNit(int nit){
-		this.nit = nit;
+	public void setId(int id){
+		this.id = id;
 	}
 
 	public String getName() {
@@ -52,5 +57,13 @@ public class ProductDto {
 
 	public void setStockQuantity(int stockQuantity) {
 		this.stockQuantity = stockQuantity;
+	}
+
+	public StoreDto getStoreDto() {
+		return storeDto;
+	}
+
+	public void setStoreDto(StoreDto storeDto) {
+		this.storeDto = storeDto;
 	}
 }

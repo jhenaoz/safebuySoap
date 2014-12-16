@@ -36,9 +36,10 @@ tmp/
 *.swp
 *~.nib
 local.properties
-.settings/
+.settings
 .loadpath
 .classpath
+.project
 
 # External tool builders
 .externalToolBuilders/
