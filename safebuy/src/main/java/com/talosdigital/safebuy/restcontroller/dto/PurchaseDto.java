@@ -1,6 +1,6 @@
 package com.talosdigital.safebuy.restcontroller.dto;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
@@ -11,7 +11,7 @@ public class PurchaseDto {
 	
 	private StoreDto store;
 	
-	private ArrayList<ProductDto> products;
+	private List<ProductDto> products;
 	
 	private BuyerDto buyer;
 
@@ -31,11 +31,11 @@ public class PurchaseDto {
 		this.store = store;
 	}
 
-	public ArrayList<ProductDto> getProducts() {
+	public List<ProductDto> getProducts() {
 		return products;
 	}
 
-	public void setProducts(ArrayList<ProductDto> products) {
+	public void setProducts(List<ProductDto> products) {
 		this.products = products;
 	}
 	

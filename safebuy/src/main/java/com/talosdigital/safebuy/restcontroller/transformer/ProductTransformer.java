@@ -1,5 +1,8 @@
 package com.talosdigital.safebuy.restcontroller.transformer;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.talosdigital.safebuy.model.Product;
 import com.talosdigital.safebuy.restcontroller.dto.ProductDto;
 
@@ -30,5 +33,23 @@ public class ProductTransformer {
 		productDto.setStoreDto(StoreTransformer.toStoreDto(product.getStore()));
 		
 		return productDto;
+	}
+	
+	public static List<ProductDto> toProductDtoList(List<Product> productList){
+		List<ProductDto> dtoList = new ArrayList<ProductDto>();
+		for(Product product : productList){
+			dtoList.add(toProductDto(product));
+		}
+		
+		return dtoList;
+	}
+
+	public static List<Product> toProductList(List<ProductDto> productDtos) {
+		List<Product> productList = new ArrayList<Product>();
+		for(ProductDto productDto : productDtos){
+			productList.add(toProduct(productDto));
+		}
+		
+		return productList;
 	}
 }

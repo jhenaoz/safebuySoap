@@ -24,24 +24,29 @@ public class ProductRestController {
 	@Autowired
 	private ProductDao productDao;
 	
-	// TODO: Get products with store id.
-	@RequestMapping(value = "/rest/product",
-			method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	// TODO: Change return type to List<ProductDto>
+	@RequestMapping(value = "/rest/product/",
+			method = RequestMethod.GET,
+			produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	public List<Product> getProductList(){
 		return productDao.getProductList();
 	}
 
 	// TODO: Get products with store id.
-	@RequestMapping(value = "/rest/product/{id}",
-			method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(
+			value = "/rest/product/{id}",
+			method = RequestMethod.GET,
+			produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	public ProductDto getProductById(@PathVariable("id") int id){
 		return ProductTransformer.toProductDto(productDao.getProduct(id));
 	}
 	
-	@RequestMapping(value = "/rest/product",
-			method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(
+			value = "/rest/product/",
+			method = RequestMethod.POST,
+			consumes = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseStatus(HttpStatus.CREATED)
 	@ResponseBody
 	public ProductDto createProduct(@RequestBody ProductDto productDto) {
@@ -49,8 +54,10 @@ public class ProductRestController {
 		return ProductTransformer.toProductDto(product);
 	}
 	
-	@RequestMapping(value = "/rest/product/",
-			method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(
+			value = "/rest/product/",
+			method = RequestMethod.PUT,
+			consumes = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseStatus(HttpStatus.OK)
 	public void updateProduct(@RequestBody ProductDto productDto){
 		productDao.updateProduct(ProductTransformer.toProduct(productDto));
