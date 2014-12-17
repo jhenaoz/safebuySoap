@@ -3,16 +3,12 @@ import static org.junit.Assert.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.After;
 import org.junit.AfterClass;
-import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.springframework.web.client.RestTemplate;
 
 import com.talosdigital.safebuy.model.Category;
-import com.talosdigital.safebuy.model.Store;
-import com.talosdigital.safebuy.persistence.dao.BuyerDao;
 import com.talosdigital.safebuy.restcontroller.dto.BuyerDto;
 import com.talosdigital.safebuy.restcontroller.dto.ProductDto;
 import com.talosdigital.safebuy.restcontroller.dto.PurchaseDto;

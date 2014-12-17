@@ -1,7 +1,5 @@
 package com.talosdigital.safebuy.restcontroller.dto;
 
-import com.talosdigital.safebuy.model.Store;
-
 public class BuyerDto {
 
 	private int id;

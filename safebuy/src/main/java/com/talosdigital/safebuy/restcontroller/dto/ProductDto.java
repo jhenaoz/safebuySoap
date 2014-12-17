@@ -2,7 +2,6 @@ package com.talosdigital.safebuy.restcontroller.dto;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.talosdigital.safebuy.model.Category;
-import com.talosdigital.safebuy.model.Store;
 
 @JsonSerialize
 public class ProductDto {

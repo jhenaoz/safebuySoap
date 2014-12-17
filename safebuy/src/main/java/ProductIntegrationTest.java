@@ -4,15 +4,9 @@ import static org.junit.Assert.*;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
 import com.talosdigital.safebuy.model.Category;
-import com.talosdigital.safebuy.persistence.dao.StoreDao;
 import com.talosdigital.safebuy.restcontroller.dto.ProductDto;
 import com.talosdigital.safebuy.restcontroller.dto.StoreDto;
 
