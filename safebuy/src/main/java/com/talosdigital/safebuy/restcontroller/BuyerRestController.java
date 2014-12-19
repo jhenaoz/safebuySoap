@@ -14,11 +14,15 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.talosdigital.safebuy.model.ArtificialPersonBuyer;
 import com.talosdigital.safebuy.model.Buyer;
+import com.talosdigital.safebuy.model.NaturalPersonBuyer;
 import com.talosdigital.safebuy.persistence.dao.BuyerDao;
+import com.talosdigital.safebuy.restcontroller.dto.ArtificialPersonBuyerDto;
 import com.talosdigital.safebuy.restcontroller.dto.BuyerDto;
 import com.talosdigital.safebuy.restcontroller.dto.NaturalPersonBuyerDto;
-import com.talosdigital.safebuy.restcontroller.transformer.BuyerTransformer;
+import com.talosdigital.safebuy.restcontroller.transformer.ArtificialPersonBuyerTransformer;
+import com.talosdigital.safebuy.restcontroller.transformer.NaturalPersonBuyerTransformer;
 
 @RestController
 public class BuyerRestController {
@@ -31,7 +35,7 @@ public class BuyerRestController {
 		return new ModelAndView("/pages/index.jsp");
 	}
 
-	@RequestMapping(value = "/rest/buyer",
+	@RequestMapping(value = "/rest/buyer/",
 			method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	public List<Buyer> getSafeBuyerList() {
@@ -45,13 +49,22 @@ public class BuyerRestController {
 		return buyerdao.getSafeBuyer(id);
 	}
 
-	@RequestMapping(value = "/rest/buyer",
+	@RequestMapping(value = "/rest/buyer/natural/",
 			method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseStatus(HttpStatus.CREATED)
 	@ResponseBody
-	public BuyerDto createSafeBuyer(@RequestBody NaturalPersonBuyerDto buyerDto) {
-		Buyer buyer = buyerdao.createSafeBuyer(BuyerTransformer.toBuyer(buyerDto));
-		return BuyerTransformer.toBuyerDto(buyer);
+	public NaturalPersonBuyerDto createSafeBuyer(@RequestBody NaturalPersonBuyerDto buyerDto) {
+		Buyer buyer = buyerdao.createSafeBuyer(NaturalPersonBuyerTransformer.toNaturalPersonBuyer(buyerDto));
+		return NaturalPersonBuyerTransformer.toNaturalPersonBuyerDto((NaturalPersonBuyer) buyer);
+	}
+	
+	@RequestMapping(value = "/rest/buyer/artificial/",
+			method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseStatus(HttpStatus.CREATED)
+	@ResponseBody
+	public ArtificialPersonBuyerDto createSafeBuyer(@RequestBody ArtificialPersonBuyerDto buyerDto) {
+		Buyer buyer = buyerdao.createSafeBuyer(ArtificialPersonBuyerTransformer.toArtificialPersonBuyer(buyerDto));
+		return ArtificialPersonBuyerTransformer.toArtificialPersonBuyerDto((ArtificialPersonBuyer) buyer);
 	}
 
 	@RequestMapping(value = "/rest/buyer/{id}",
@@ -59,7 +72,7 @@ public class BuyerRestController {
 	@ResponseStatus(HttpStatus.OK)
 	public void updateSafeBuyer(@RequestBody BuyerDto buyerDto,
 			@PathVariable("id") int id) {
-		buyerdao.updateSafeBuyer(BuyerTransformer.toBuyer(buyerDto));
+		buyerdao.updateSafeBuyer(buyerdao.getSafeBuyer(id));
 	}
 
 	@RequestMapping(value = "/rest/buyer/{id}", method = RequestMethod.DELETE)

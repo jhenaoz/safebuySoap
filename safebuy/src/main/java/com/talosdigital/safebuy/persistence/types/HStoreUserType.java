@@ -8,15 +8,10 @@ import java.sql.Types;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.Set;
 
 import org.hibernate.HibernateException;
 import org.hibernate.usertype.UserType;
 import org.postgresql.util.HStoreConverter;
-import org.springframework.util.ObjectUtils;
-
-import com.fasterxml.jackson.annotation.JsonSubTypes.Type;
-import com.talosdigital.safebuy.model.ProductProperties;;
 
 public class HStoreUserType implements UserType {
 
@@ -28,21 +23,20 @@ public class HStoreUserType implements UserType {
 
 	@Override
 	public Object deepCopy(Object value) throws HibernateException {
-		HashMap<ProductProperties, String> test =  new HashMap<ProductProperties, String>();
-		test.put(ProductProperties.COLOR, "blue");
-		System.out.println(test.keySet().size());
-		HashMap<ProductProperties, String> oldMap =
-				value instanceof HashMap<?, ?>
-					? (HashMap<ProductProperties, String>)value
-					: null;
-		HashMap<ProductProperties, String> newMap = new HashMap<ProductProperties, String>();
-		for(Entry entry : oldMap.entrySet()){
-			newMap.put((ProductProperties)entry.getKey(), (String)entry.getValue());
-		}
-//		for (ProductProperties pp : (Set<ProductProperties>)oldMap.keySet()){
-//			newMap.put(pp, oldMap.get(pp));
+//		HashMap<String, String> test =  new HashMap<String, String>();
+//		HashMap<String, String> oldMap =
+//				value instanceof HashMap<?, ?>
+//					? (HashMap<String, String>)value
+//					: null;
+//		HashMap<String, String> newMap = new HashMap<String, String>();
+//		for(Entry<String, String> entry : oldMap.entrySet()){
+//			newMap.put((String)entry.getKey(), (String)entry.getValue());
 //		}
-		return newMap;
+////		for (ProductProperties pp : (Set<ProductProperties>)oldMap.keySet()){
+////			newMap.put(pp, oldMap.get(pp));
+////		}
+		Map m = (Map)value;
+		return new HashMap(m);
 		
 	}
 
@@ -72,7 +66,7 @@ public class HStoreUserType implements UserType {
 	@Override
 	public Object nullSafeGet(ResultSet resultSet, String[] names, Object owner)
 			throws HibernateException, SQLException {
-		HashMap<ProductProperties, String> map =(HashMap<ProductProperties, String>) HStoreConverter.fromString(resultSet.getString(names[0]));	
+		HashMap<String, String> map =(HashMap<String, String>) HStoreConverter.fromString(resultSet.getString(names[0]));	
 		return map;
 	}
 

@@ -1,10 +1,37 @@
 package com.talosdigital.safebuy.restcontroller.dto;
 
-public class NaturalPersonBuyerDto extends BuyerDto {
+public class NaturalPersonBuyerDto {
 	
 	private String lastName;
 	private int age;
 	private int documentNumber;
+	private int id;
+	private String name;
+	private StoreDto storeDto;
+	
+	public StoreDto getStoreDto() {
+		return storeDto;
+	}
+	
+	public void setStoreDto(StoreDto storeDto) {
+		this.storeDto = storeDto;
+	}
+	
+	public String getName() {
+		return name;
+	}
+	
+	public void setName(String name) {
+		this.name = name;
+	}
+	
+	public int getId() {
+		return id;
+	}
+	
+	public void setId(int id) {
+		this.id = id;
+	}
 	
 	public int getAge() {
 		return age;

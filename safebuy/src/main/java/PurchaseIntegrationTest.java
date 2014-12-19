@@ -22,7 +22,7 @@ public class PurchaseIntegrationTest {
 	private static RestTemplate restTemplate;
 	private static String baseUrl = "http://localhost:8080/rest/";
 	private static StoreDto storeDto;
-	private static BuyerDto buyerDto; 
+	private static NaturalPersonBuyerDto buyerDto; 
 	private static ArrayList<ProductDto> products;
 	
 	@BeforeClass
@@ -43,7 +43,7 @@ public class PurchaseIntegrationTest {
 		requestBuyerDto.setAge(99);
 		requestBuyerDto.setDocumentNumber(9764543);
 		buyerDto = restTemplate.postForObject(
-				baseUrl + "buyer/",
+				baseUrl + "buyer/natural/",
 				requestBuyerDto,
 				NaturalPersonBuyerDto.class);
 		
@@ -84,7 +84,7 @@ public class PurchaseIntegrationTest {
 	@Test
 	public void testCreatePurchase() {
 		PurchaseDto requestDto = new PurchaseDto();
-		requestDto.setBuyer(buyerDto);
+		requestDto.setNaturalPersonBuyer(buyerDto);
 		requestDto.setStore(storeDto);
 		requestDto.setProducts(products);
 		
@@ -93,7 +93,7 @@ public class PurchaseIntegrationTest {
 				requestDto,
 				PurchaseDto.class);
 		
-		assertEquals(requestDto.getBuyer().getId(), resultDto.getBuyer().getId());
+		assertEquals(requestDto.getNaturalPersonBuyer().getId(), resultDto.getNaturalPersonBuyer().getId());
 		restTemplate.delete(
 				baseUrl + "purchase/" +	resultDto.getId());
 	}
@@ -101,7 +101,7 @@ public class PurchaseIntegrationTest {
 	@Test
 	public void testUpdatePurchase() {
 		PurchaseDto requestDto = new PurchaseDto();
-		requestDto.setBuyer(buyerDto);
+		requestDto.setNaturalPersonBuyer(buyerDto);
 		requestDto.setStore(storeDto);
 		requestDto.setProducts(products);
 		

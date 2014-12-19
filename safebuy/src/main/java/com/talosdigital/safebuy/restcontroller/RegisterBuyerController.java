@@ -14,7 +14,6 @@ import org.springframework.web.servlet.ModelAndView;
 import com.talosdigital.safebuy.model.Buyer;
 import com.talosdigital.safebuy.persistence.dao.BuyerDao;
 import com.talosdigital.safebuy.restcontroller.dto.BuyerDto;
-import com.talosdigital.safebuy.restcontroller.transformer.BuyerTransformer;
 import com.talosdigital.safebuy.util.MessageType;
 import com.talosdigital.safebuy.util.ResponseMessage;
 //@Controller
