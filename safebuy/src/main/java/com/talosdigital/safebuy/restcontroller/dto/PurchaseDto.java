@@ -14,7 +14,9 @@ public class PurchaseDto {
 	
 	private List<ProductDto> products;
 	
-	private BuyerDto buyer;
+	private NaturalPersonBuyerDto naturalBuyer = null;
+	
+	private ArtificialPersonBuyerDto artificialBuyer = null;
 	
 	private Date date;
 	
@@ -65,11 +67,19 @@ public class PurchaseDto {
 	}
 
 	public BuyerDto getBuyer() {
-		return buyer;
+		if(naturalBuyer != null){
+			return naturalBuyer;
+		}else{
+			return artificialBuyer;
+		}
 	}
 
 	public void setBuyer(BuyerDto buyer) {
-		this.buyer = buyer;
+		if(buyer instanceof NaturalPersonBuyerDto){
+			naturalBuyer = (NaturalPersonBuyerDto)buyer;
+		}else{
+			artificialBuyer = (ArtificialPersonBuyerDto)buyer;
+		}
 	}
 	
 	

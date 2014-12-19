@@ -1,10 +1,9 @@
 package com.talosdigital.safebuy.restcontroller.dto;
 
-public class BuyerDto {
+public abstract class BuyerDto {
 
 	private int id;
 	private String name;
-	private String lastName;
 	private StoreDto storeDto;
 	
 	public StoreDto getStoreDto() {
@@ -18,12 +17,6 @@ public class BuyerDto {
 	}
 	public void setName(String name) {
 		this.name = name;
-	}
-	public String getLastName() {
-		return lastName;
-	}
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
 	}
 	public int getId() {
 		return id;

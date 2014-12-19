@@ -50,7 +50,7 @@ public class PurchaseRestController {
 	@ResponseStatus(HttpStatus.CREATED)
 	@ResponseBody
 	public PurchaseDto createPurchase(@RequestBody PurchaseDto purchaseDto){
-		Purchase purchase = purchaseDao.createPurchase(PurchaseTransformer.toPurchase(purchaseDto));
+		Purchase purchase = purchaseDao.createPurchase(PurchaseTransformer.toPurchase((PurchaseDto)purchaseDto));
 		return PurchaseTransformer.toPurchaseDto(purchase);
 	}
 	

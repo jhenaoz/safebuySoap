@@ -9,7 +9,9 @@ import org.junit.Test;
 import org.springframework.web.client.RestTemplate;
 
 import com.talosdigital.safebuy.model.Category;
+import com.talosdigital.safebuy.model.NaturalPersonBuyer;
 import com.talosdigital.safebuy.restcontroller.dto.BuyerDto;
+import com.talosdigital.safebuy.restcontroller.dto.NaturalPersonBuyerDto;
 import com.talosdigital.safebuy.restcontroller.dto.ProductDto;
 import com.talosdigital.safebuy.restcontroller.dto.PurchaseDto;
 import com.talosdigital.safebuy.restcontroller.dto.StoreDto;
@@ -34,14 +36,16 @@ public class PurchaseIntegrationTest {
 				requestStoreDto,
 				StoreDto.class);
 		
-		BuyerDto requestBuyerDto = new BuyerDto();
+		NaturalPersonBuyerDto requestBuyerDto = new NaturalPersonBuyerDto();
 		requestBuyerDto.setLastName("Carvajal");
 		requestBuyerDto.setName("Mateo");
 		requestBuyerDto.setStoreDto(storeDto);
+		requestBuyerDto.setAge(99);
+		requestBuyerDto.setDocumentNumber(9764543);
 		buyerDto = restTemplate.postForObject(
 				baseUrl + "buyer/",
 				requestBuyerDto,
-				BuyerDto.class);
+				NaturalPersonBuyerDto.class);
 		
 		
 		ProductDto requestDto = new ProductDto();

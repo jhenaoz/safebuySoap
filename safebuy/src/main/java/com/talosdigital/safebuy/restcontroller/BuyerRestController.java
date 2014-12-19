@@ -17,6 +17,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.talosdigital.safebuy.model.Buyer;
 import com.talosdigital.safebuy.persistence.dao.BuyerDao;
 import com.talosdigital.safebuy.restcontroller.dto.BuyerDto;
+import com.talosdigital.safebuy.restcontroller.dto.NaturalPersonBuyerDto;
 import com.talosdigital.safebuy.restcontroller.transformer.BuyerTransformer;
 
 @RestController
@@ -48,7 +49,7 @@ public class BuyerRestController {
 			method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseStatus(HttpStatus.CREATED)
 	@ResponseBody
-	public BuyerDto createSafeBuyer(@RequestBody BuyerDto buyerDto) {
+	public BuyerDto createSafeBuyer(@RequestBody NaturalPersonBuyerDto buyerDto) {
 		Buyer buyer = buyerdao.createSafeBuyer(BuyerTransformer.toBuyer(buyerDto));
 		return BuyerTransformer.toBuyerDto(buyer);
 	}
