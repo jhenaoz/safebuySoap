@@ -18,6 +18,7 @@ public class ProductTransformer {
 		product.setCategory(productDto.getCategory());
 		product.setStockQuantity(productDto.getStockQuantity());
 		product.setStore(StoreTransformer.toStore(productDto.getStoreDto()));
+		product.setProperties(productDto.getProperties());
 		
 		return product;
 	}
@@ -31,6 +32,7 @@ public class ProductTransformer {
 		productDto.setCategory(product.getCategory());
 		productDto.setStockQuantity(product.getStockQuantity());
 		productDto.setStoreDto(StoreTransformer.toStoreDto(product.getStore()));
+		productDto.setProperties(product.getProperties());
 		
 		return productDto;
 	}

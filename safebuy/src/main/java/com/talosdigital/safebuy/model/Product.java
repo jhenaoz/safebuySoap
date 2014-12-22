@@ -12,6 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import org.hibernate.annotations.Type;
 import org.hibernate.annotations.TypeDef;
@@ -47,7 +48,6 @@ public class Product implements Serializable{
 	private Store store;
 	
 	@Type(type = "hstore")
-	@Column(columnDefinition = "hstore")
 	private HashMap<String, String> properties;
 	
 	public HashMap<String, String> getProperties() {

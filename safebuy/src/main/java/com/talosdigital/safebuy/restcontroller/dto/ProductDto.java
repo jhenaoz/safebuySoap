@@ -1,5 +1,7 @@
 package com.talosdigital.safebuy.restcontroller.dto;
 
+import java.util.HashMap;
+
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.talosdigital.safebuy.model.Category;
 
@@ -17,6 +19,8 @@ public class ProductDto {
 	private int stockQuantity;
 	
 	private StoreDto storeDto;
+	
+	private HashMap<String, String> properties;
 
 	public int getId() {
 		return id;
@@ -64,5 +68,13 @@ public class ProductDto {
 
 	public void setStoreDto(StoreDto storeDto) {
 		this.storeDto = storeDto;
+	}
+	
+	public HashMap<String, String> getProperties() {
+		return properties;
+	}
+
+	public void setProperties(HashMap<String, String> properties) {
+		this.properties = properties;
 	}
 }

@@ -1,6 +1,8 @@
 
 import static org.junit.Assert.*;
 
+import java.util.HashMap;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -36,12 +38,16 @@ public class ProductIntegrationTest {
 		requestDto.setPrice(100000.0f);
 		requestDto.setStockQuantity(2);
 		requestDto.setStoreDto(storeDto);
+		HashMap<String, String> properties = new HashMap<String, String>();
+		properties.put("Color", "Blue");
+		requestDto.setProperties(properties);
 		
 		ProductDto productDto = restTemplate.postForObject(baseUrl + "product/", requestDto, ProductDto.class);
 		assertEquals(Category.ELECTRONICS, productDto.getCategory());
 		assertEquals("Robodog", productDto.getName());
 		assertEquals(new Float(100000.0f), new Float(productDto.getPrice()));
 		assertEquals(2, productDto.getStockQuantity());
+		assertEquals(properties.get("Color"), productDto.getProperties().get("Color"));
 		restTemplate.delete(baseUrl + "product/" + productDto.getId());
 	}
 	
@@ -53,16 +59,21 @@ public class ProductIntegrationTest {
 		requestDto.setPrice(100000.0f);
 		requestDto.setStockQuantity(2);
 		requestDto.setStoreDto(storeDto);
+		HashMap<String, String> properties = new HashMap<String, String>();
+		properties.put("Color", "Blue");
+		requestDto.setProperties(properties);
 		ProductDto productDto = restTemplate.postForObject(
 				baseUrl + "product/",
 				requestDto,
 				ProductDto.class);
 		productDto.setStockQuantity(productDto.getStockQuantity() - 1);
+		productDto.getProperties().put("Color", "Pink");
 		restTemplate.put(baseUrl + "product/", productDto);
 		ProductDto updatedProductDto = restTemplate.getForObject(
 				baseUrl + "product/" + productDto.getId(),
 				ProductDto.class);
 		assertEquals(productDto.getStockQuantity(), updatedProductDto.getStockQuantity());
+		assertEquals(productDto.getProperties().get("Color"), updatedProductDto.getProperties().get("Color"));
 		restTemplate.delete(baseUrl + "product/" + productDto.getId());
 	}
 

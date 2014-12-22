@@ -23,21 +23,10 @@ public class HStoreUserType implements UserType {
 
 	@Override
 	public Object deepCopy(Object value) throws HibernateException {
-//		HashMap<String, String> test =  new HashMap<String, String>();
-//		HashMap<String, String> oldMap =
-//				value instanceof HashMap<?, ?>
-//					? (HashMap<String, String>)value
-//					: null;
-//		HashMap<String, String> newMap = new HashMap<String, String>();
-//		for(Entry<String, String> entry : oldMap.entrySet()){
-//			newMap.put((String)entry.getKey(), (String)entry.getValue());
-//		}
-////		for (ProductProperties pp : (Set<ProductProperties>)oldMap.keySet()){
-////			newMap.put(pp, oldMap.get(pp));
-////		}
-		Map m = (Map)value;
-		return new HashMap(m);
-		
+		if(value != null){
+			return  (HashMap)value;
+		}
+		return null;
 	}
 
 	@Override
@@ -50,6 +39,9 @@ public class HStoreUserType implements UserType {
 
 	@Override
 	public boolean equals(Object x, Object y) throws HibernateException {
+		if(x == null){
+			return y == null;
+		}
 		return x.equals(y);
 	}
 
@@ -66,14 +58,22 @@ public class HStoreUserType implements UserType {
 	@Override
 	public Object nullSafeGet(ResultSet resultSet, String[] names, Object owner)
 			throws HibernateException, SQLException {
-		HashMap<String, String> map =(HashMap<String, String>) HStoreConverter.fromString(resultSet.getString(names[0]));	
+		if(resultSet.getString(names[0])==null){
+			return null;
+		}
+		HashMap<String, String> map = (HashMap<String, String>) HStoreConverter.fromString(resultSet.getString(names[0]));	
 		return map;
 	}
 
 	@Override
 	public void nullSafeSet(PreparedStatement preparedStatement, Object value, int index)
 			throws HibernateException, SQLException {
-		preparedStatement.setObject(index, HStoreConverter.toString((Map) value));
+		if(value != null){
+			preparedStatement.setObject(index, HStoreConverter.toString((Map<String, String>) value));
+		}
+		else {
+			preparedStatement.setObject(index, null);
+		}
 	}
 
 	@Override
